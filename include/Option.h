@@ -1,21 +1,29 @@
-#ifndef CMONAD_OPTION
-#define CMONAD_OPTION
+#pragma once
 
-#include <stdbool.h>
+#define decl_Option(T) \
+\
+typedef struct { \
+    Option option; \
+    T value; \
+} Option_##T; \
+\
+Option_##T Option_##T##_new(Option opt, T val); \
 
-#define decl_Option(T, declname) \
+#define def_Option(T) \
 \
-struct declname \
+Option_##T Option_##T##_new(Option opt, T val) \
 { \
-  bool success; \
-  T value; \
-}; \
-\
-declname new_##Option(T value) \
-{ \
-  declname temp = {
-    .success = fal
-  }
+    Option_##T temp = { \
+        .option = opt, \
+        .value = val \
+    }; \
+    return temp;\
 } \
 
-#endif
+enum _Option;
+typedef enum _Option Option;
+
+enum _Option {
+    Some,
+    None
+};
